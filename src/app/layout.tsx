@@ -1,7 +1,12 @@
 import { ReactNode } from "react";
 import type { Metadata } from "next";
+import { Inter } from 'next/font/google';
 
+import MswComponent from "./_components/msw-component";
+import AuthSession from "./_components/auth-session";
 import "./globals.css";
+
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
     title: "Create Next App",
@@ -15,8 +20,11 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body>
-                {children}
+            <body className={inter.className}>
+                <MswComponent />
+                <AuthSession>
+                    {children}
+                </AuthSession>
             </body>
         </html>
     );

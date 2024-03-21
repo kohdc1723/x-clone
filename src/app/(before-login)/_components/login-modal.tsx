@@ -1,18 +1,38 @@
 "use client";
 
-import { useState } from "react";
+import { ChangeEventHandler, FormEventHandler, useState } from "react";
 
-import style from "@/app/(before-login)/_styles/login.module.css";
+import style from "./login.module.css";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 export default function LoginModal() {
-    const [username, setUsername] = useState();
-    const [password, setPassword] = useState();
-    const [message, setMessage] = useState();
+    const router = useRouter();
 
-    const onSubmit = () => { };
-    const onClickClose = () => { };
-    const onChangeUsername = () => { };
-    const onChangePassword = () => { };
+    const [id, setId] = useState("");
+    const [password, setPassword] = useState("");
+    const [message, setMessage] = useState("");
+
+    const onClickClose = () => router.back();
+    const onChangeId: ChangeEventHandler<HTMLInputElement> = (e) => setId(e.target.value);
+    const onChangePassword: ChangeEventHandler<HTMLInputElement> = (e) => setPassword(e.target.value);
+    const onSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
+        e.preventDefault();
+        setMessage("");
+
+        try {
+            await signIn("credentials", {
+                username: id,
+                password: password,
+                redirect: false
+            });
+
+            router.replace("/home");
+        } catch (err) {
+            console.error(err);
+            setMessage("Wrong id or password");
+        }
+    };
 
     return (
         <div className={style.modalBackground}>
@@ -31,8 +51,8 @@ export default function LoginModal() {
                 <form onSubmit={onSubmit}>
                     <div className={style.modalBody}>
                         <div className={style.inputDiv}>
-                            <label className={style.inputLabel} htmlFor="username">Username</label>
-                            <input id="username" className={style.input} value={username} onChange={onChangeUsername} type="text" placeholder="" />
+                            <label className={style.inputLabel} htmlFor="id">Username</label>
+                            <input id="id" className={style.input} value={id} onChange={onChangeId} type="text" placeholder="" />
                         </div>
                         <div className={style.inputDiv}>
                             <label className={style.inputLabel} htmlFor="password">Password</label>
@@ -41,7 +61,7 @@ export default function LoginModal() {
                     </div>
                     <div className={style.message}>{message}</div>
                     <div className={style.modalFooter}>
-                        <button className={style.actionButton} disabled={!username && !password}>Sign in</button>
+                        <button className={style.actionButton} disabled={!id && !password}>Sign in</button>
                     </div>
                 </form>
             </div>

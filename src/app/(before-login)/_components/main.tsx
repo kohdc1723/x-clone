@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import style from "@/app/(before-login)/_styles/main.module.css";
+import style from "./main.module.css";
 import X from "@/../public/x.png";
 
 export default function Main() {

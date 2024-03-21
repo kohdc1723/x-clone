@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 
-import style from "@/app/(after-login)/_styles/nav-menu.module.css";
+import style from "@/app/(after-login)/_components/nav-menu.module.css";
 
 export default function NavMenu() {
     const segment = useSelectedLayoutSegment();

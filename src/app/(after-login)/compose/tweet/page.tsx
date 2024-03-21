@@ -1,5 +1,7 @@
+import HomePage from "../../home/page";
+
 export default function ComposeTweetPage() {
     return (
-        <div>ComposeTweetPage</div>
+        <HomePage />
     );
 };

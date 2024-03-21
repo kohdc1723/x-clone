@@ -1,6 +1,6 @@
 "use client";
 
-import style from "@/app/(after-login)/_styles/follow-recommend.module.css";
+import style from "@/app/(after-login)/_components/follow-recommend.module.css";
 
 export default function FollowRecommend() {
     const onClickFollow = () => {};
